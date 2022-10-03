@@ -1,0 +1,33 @@
+----------------------------------------Users-------------------------------------------------
+
+GET	
+	All users   - http://localhost:8082/quizApp/userapi/users
+	user by Id  - http://localhost:8082/quizApp/userapi/userById/6
+
+POST
+	 Post user  - http://localhost:8082/quizApp/userapi/postUser
+	 	{ 
+			"firstName":"",
+			"lastName":"",
+			"email":"",
+			"password":""
+		}
+		
+PUT 
+	PUT Password - http://localhost:8082/quizApp/userapi
+		
+----------------------------------------Results-------------------------------------------------
+
+GET	
+	All users   - http://localhost:8082/quizApp/resultapi/results
+	user by Id  - http://localhost:8082/quizApp/resultapi/results/1
+
+POST
+	 Post user  - http://localhost:8082/quizApp/resultapi/result
+	 	{ 
+			
+    		"status":1,
+    		"marks":80,
+   		    "percentage":80
+
+		}

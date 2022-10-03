@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/aop		
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<ctx:annotation-config></ctx:annotation-config>
+	<ctx:component-scan base-package="com.yash.*"></ctx:component-scan>
+	
+		 <!--    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	    
+	    <bean id="LoggingAspect" class="com.yash.aspects.LoggingAspect"></bean> -->
+
+	<bean id="dataSource" class="com.yash.integrate.DataSource">
+		<property name="driver" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	
+	
+	<bean id="propertyConfigurerDB"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean id="drivermanagerdatasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+
+
+	<bean id="usersDBQuery" class="com.yash.helper.UserDBQuery">
+		<property name="selectUserQuery"
+			value="select * from userrecords"></property>
+		<property name="insertUserQuery"
+			value="insert into userrecords (user_id,first_name,last_name,email,password) values(?,?,?,?,?)"></property>
+		<property name="updateUserQuery"
+			value="update userrecords set password=? where email=?"></property>
+		<property name="deleteUserQuery"
+			value="delete from userrecords where user_id=?"></property>
+		<property name="selectUserByIdQuery"
+			value="select * from userrecords where user_id=?"></property>
+		<property name="authUserQuery"
+			value="select * from userrecords where email=? and password=?"></property>
+		<property name="checkUserIdQuery" 
+		value="select * from userrecords where user_id=?"></property>
+		<property name="userByEmail"  
+		value="select * from userrecords where email=?">
+		</property>
+	</bean>
+
+	<bean id="questionsDBQuery"
+		class="com.yash.helper.QuestionsDBQuery">
+		<property name="selectAllQuestionQuery"
+			value="select * from questions"></property>
+		<property name="insertQuestionQuery"
+			value="insert into questions values(?,?,?,?,?,?,?,?)"></property>
+		<property name="updateQuestionQuery"
+			value="update questions set correct_answer=? where question_id = ?"></property>
+		<property name="deleteQuestionQuery"
+			value="delete from questions where question_id=?"></property>
+		<property name="selectQuestionByIdQuery"
+			value="select * from questions where question_id=?"></property>
+			<property name="selectSpringQuestionsQuery"
+			value="select * from spring_questions"></property>
+	</bean>
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="drivermanagerdatasource" />
+		<property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property>
+	</bean>
+</beans>
+
+
+
+	
+
+
+
+	
